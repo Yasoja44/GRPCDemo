@@ -9,15 +9,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClientImpl {
 
-        @GrpcClient("greetingService")
+        @GrpcClient("greeting-service")
         private GreetingServiceGrpc.GreetingServiceBlockingStub greetingServiceStub;
 
         public String receiveGreeting(String message) {
             GreetingRequest request = GreetingRequest.newBuilder()
-                    .setMessage(message)
+                    .setMessage("yes")
                     .build();
+
+            System.out.println(greetingServiceStub.greeting(request).getMessage());
             return greetingServiceStub.greeting(request).getMessage();
         }
+
+
 
 
 }
