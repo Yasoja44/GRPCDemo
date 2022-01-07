@@ -2,9 +2,7 @@ package com.grpcclient.client.config;
 
 import com.grpcclient.client.service.ClientImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class Controller {
@@ -12,8 +10,8 @@ public class Controller {
     @Autowired
     private ClientImpl grpcClientService;
 
-    @RequestMapping("/")
-    public String printMessage(@RequestParam(defaultValue = "Michael") String name) {
+    @GetMapping("/{name}")
+    public String printMessage(@PathVariable("name") String name) {
         return grpcClientService.receiveGreeting(name);
     }
 }

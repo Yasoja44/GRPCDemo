@@ -14,7 +14,7 @@ public class ClientImpl {
 
         public String receiveGreeting(String message) {
             GreetingRequest request = GreetingRequest.newBuilder()
-                    .setMessage("yes")
+                    .setMessage(message)
                     .build();
 
             System.out.println(greetingServiceStub.greeting(request).getMessage());
