@@ -4,6 +4,8 @@ import com.demo.grpc.GreetingRequest;
 import com.demo.grpc.GreetingServiceGrpc;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,13 +14,22 @@ public class ClientImpl {
         @GrpcClient("greeting-service")
         private GreetingServiceGrpc.GreetingServiceBlockingStub greetingServiceStub;
 
-        public String receiveGreeting(String message) {
-            GreetingRequest request = GreetingRequest.newBuilder()
-                    .setMessage(message)
-                    .build();
+        public Object receiveGreeting(String message) {
 
-            System.out.println(greetingServiceStub.greeting(request).getMessage());
-            return greetingServiceStub.greeting(request).getMessage();
+            try{
+
+                GreetingRequest request = GreetingRequest.newBuilder()
+                        .setMessage(message)
+                        .build();
+
+                return greetingServiceStub.greeting(request).getMessage();
+
+            }catch (Exception e){
+                return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+            }
+
+
+
         }
 
 

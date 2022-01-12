@@ -37,15 +37,13 @@ public class Interceptor implements ClientInterceptor {
                                 super.onHeaders(headers);
                             }
 
-
-
-
-
                             @Override
                             public void onClose(Status status, Metadata trailers) {
                                 log.info("Interaction ends with status: {}", status);
                                 log.info("Trailers: {}", trailers);
                                 super.onClose(status, trailers);
+
+
                             }
 
                         }, headers);

@@ -11,7 +11,7 @@ public class Controller {
     private ClientImpl grpcClientService;
 
     @GetMapping("/{name}")
-    public String printMessage(@PathVariable("name") String name) {
+    public Object printMessage(@PathVariable("name") String name) {
         return grpcClientService.receiveGreeting(name);
     }
 }
