@@ -25,7 +25,14 @@ public class ClientImpl {
                 return greetingServiceStub.greeting(request).getMessage();
 
             }catch (Exception e){
-                return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+                if(e.getMessage().contains("INVALID_ARGUMENT")){
+                    return new ResponseEntity(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+                }else if(e.getMessage().contains("ABORTED")){
+                    return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+                }else{
+                    return new ResponseEntity(e.getMessage(),HttpStatus.FORBIDDEN);
+                }
+
             }
 
 
