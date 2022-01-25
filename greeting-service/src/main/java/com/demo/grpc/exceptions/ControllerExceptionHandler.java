@@ -8,8 +8,6 @@ import net.devh.boot.grpc.server.advice.GrpcAdvice;
 import net.devh.boot.grpc.server.advice.GrpcExceptionHandler;
 
 
-
-
 @GrpcAdvice
 public class ControllerExceptionHandler {
 
@@ -23,15 +21,11 @@ public class ControllerExceptionHandler {
     @GrpcExceptionHandler(YesException.class)
     public StatusException handleResourceNotFoundException(YesException e) {
         Status status = Status.INVALID_ARGUMENT.withDescription("Yes Entered!!!").withCause(e);
-
         Metadata.Key<String> AUTHORIZATION_HEADER = Metadata.Key.of("Authorization_Yes", Metadata.ASCII_STRING_MARSHALLER);
 
         Metadata extraHeaders = new Metadata();
         extraHeaders.put(AUTHORIZATION_HEADER, "Bearer_Yes" );
         MetadataUtils.newAttachHeadersInterceptor(extraHeaders);
-
-//        return  MetadataUtils.newAttachHeadersInterceptor(extraHeaders);
-
 
         System.out.println(extraHeaders);
         return status.asException(extraHeaders);
@@ -46,7 +40,6 @@ public class ControllerExceptionHandler {
         Status.Code code = status.getCode();
         System.out.println("code:" +code);
 
-
         int httpCode = statuscodes.getHttpStatus(code);
 
         Metadata extraHeaders2 = new Metadata();
@@ -54,8 +47,6 @@ public class ControllerExceptionHandler {
         extraHeaders2.put(AUTHORIZATION_HTTP, Integer.toString(httpCode));
 
         MetadataUtils.newAttachHeadersInterceptor(extraHeaders2);
-
-//        return  MetadataUtils.newAttachHeadersInterceptor(extraHeaders);
 
         return status.asException(extraHeaders2);
     }
